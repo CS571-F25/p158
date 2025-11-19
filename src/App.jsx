@@ -1,16 +1,23 @@
-import { HashRouter, Routes, Route } from 'react-router'
-import './App.css'
-import Home from './components/Home'
-import AboutMe from './components/AboutMe'
+import { HashRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import SideNav from "./components/sideNav";
+import Home from "./components/Home";
+import AboutMe from "./components/AboutMe";
+import NewList from "./components/NewList";
 
-function App() {
-  return <HashRouter>
-    <Routes>
-      <Route path="/" element={<Home/>}></Route>
-      <Route path="/about" element={<AboutMe/>}></Route>
-    </Routes>
-  </HashRouter>
-  
+export default function App() {
+    return (
+        <HashRouter>
+            <div style={{ display: "flex", minHeight: "100vh" }}>
+                <SideNav />
+                <main style={{ flex: 1, padding: "20px" }}>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<AboutMe />} />
+                        <Route path="/new-list" element={<NewList />} />
+                    </Routes>
+                </main>
+            </div>
+        </HashRouter>
+    );
 }
-
-export default App
