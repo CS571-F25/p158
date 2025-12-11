@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ProductGrid } from './components/ProductGrid';
 import { Sidebar } from './components/Sidebar';
 import { AddItemModal } from './components/AddItemModal';
@@ -33,13 +33,26 @@ export default function App() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  
+  // Initialize state from localStorage or empty array
   const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('wishlist-items');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('wishlist-items');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('Error loading products:', error);
+      return [];
+    }
   });
+  
   const [lists, setLists] = useState<List[]>(() => {
-    const saved = localStorage.getItem('wishlist-lists');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('wishlist-lists');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('Error loading lists:', error);
+      return [];
+    }
   });
 
   const handleAddProduct = (product: Omit<Product, 'id'>) => {
@@ -49,7 +62,11 @@ export default function App() {
     };
     const updatedProducts = [...products, newProduct];
     setProducts(updatedProducts);
-    localStorage.setItem('wishlist-items', JSON.stringify(updatedProducts));
+    try {
+      localStorage.setItem('wishlist-items', JSON.stringify(updatedProducts));
+    } catch (error) {
+      console.error('Error saving products:', error);
+    }
   };
 
   const handleUpdateProduct = (updatedProduct: Product) => {
@@ -57,13 +74,21 @@ export default function App() {
       p.id === updatedProduct.id ? updatedProduct : p
     );
     setProducts(updatedProducts);
-    localStorage.setItem('wishlist-items', JSON.stringify(updatedProducts));
+    try {
+      localStorage.setItem('wishlist-items', JSON.stringify(updatedProducts));
+    } catch (error) {
+      console.error('Error updating products:', error);
+    }
   };
 
   const handleDeleteProduct = (id: string) => {
     const updatedProducts = products.filter(p => p.id !== id);
     setProducts(updatedProducts);
-    localStorage.setItem('wishlist-items', JSON.stringify(updatedProducts));
+    try {
+      localStorage.setItem('wishlist-items', JSON.stringify(updatedProducts));
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
   };
 
   const handleEditProduct = (product: Product) => {
@@ -79,7 +104,11 @@ export default function App() {
     };
     const updatedLists = [...lists, newList];
     setLists(updatedLists);
-    localStorage.setItem('wishlist-lists', JSON.stringify(updatedLists));
+    try {
+      localStorage.setItem('wishlist-lists', JSON.stringify(updatedLists));
+    } catch (error) {
+      console.error('Error saving lists:', error);
+    }
   };
 
   const handleUpdateList = (updatedList: List) => {
@@ -87,13 +116,21 @@ export default function App() {
       l.id === updatedList.id ? updatedList : l
     );
     setLists(updatedLists);
-    localStorage.setItem('wishlist-lists', JSON.stringify(updatedLists));
+    try {
+      localStorage.setItem('wishlist-lists', JSON.stringify(updatedLists));
+    } catch (error) {
+      console.error('Error updating lists:', error);
+    }
   };
 
   const handleDeleteList = (id: string) => {
     const updatedLists = lists.filter(l => l.id !== id);
     setLists(updatedLists);
-    localStorage.setItem('wishlist-lists', JSON.stringify(updatedLists));
+    try {
+      localStorage.setItem('wishlist-lists', JSON.stringify(updatedLists));
+    } catch (error) {
+      console.error('Error deleting list:', error);
+    }
   };
 
   return (
