@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { Menu, Heart, List } from 'lucide-react';
 
 interface SidebarProps {
@@ -16,7 +18,7 @@ export function Sidebar({ isOpen, onToggle, currentPage, onPageChange }: Sidebar
       {/* Overlay when sidebar is open */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-0 z-40"
+          className="fixed inset-0 z-40"
           onClick={onToggle}
         />
       )}
